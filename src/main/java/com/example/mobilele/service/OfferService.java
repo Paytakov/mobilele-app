@@ -17,10 +17,10 @@ import java.util.List;
 @Service
 public class OfferService {
 
-    private OfferRepository offerRepository;
-    private OfferMapper offerMapper;
-    private UserRepository userRepository;
-    private ModelRepository modelRepository;
+    private final OfferRepository offerRepository;
+    private final OfferMapper offerMapper;
+    private final UserRepository userRepository;
+    private final ModelRepository modelRepository;
 
     public OfferService(OfferRepository offerRepository,
                         OfferMapper offerMapper,

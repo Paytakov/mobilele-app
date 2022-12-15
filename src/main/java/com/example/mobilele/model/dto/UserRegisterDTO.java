@@ -2,17 +2,10 @@ package com.example.mobilele.model.dto;
 
 import com.example.mobilele.model.validation.FieldMatch;
 import com.example.mobilele.model.validation.UniqueUserEmail;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @FieldMatch(
         first = "password",
         second = "confirmPassword",
@@ -37,4 +30,49 @@ public class UserRegisterDTO {
     @Size(min = 5)
     private String password;
     private String confirmPassword;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UserRegisterDTO setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public UserRegisterDTO setFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public UserRegisterDTO setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserRegisterDTO setPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public UserRegisterDTO setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+        return this;
+    }
 }

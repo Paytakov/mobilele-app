@@ -6,6 +6,7 @@ import com.example.mobilele.model.mapper.UserMapper;
 import com.example.mobilele.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,10 +26,12 @@ public class UserService {
     private final UserDetailsService userDetailsService;
     private final EmailService emailService;
 
+    @Autowired
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        UserMapper userMapper,
-                       UserDetailsService userDetailsService, EmailService emailService) {
+                       UserDetailsService userDetailsService,
+                       EmailService emailService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
@@ -37,18 +40,20 @@ public class UserService {
     }
 
     public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
+        String password = userRegisterDTO.getPassword();
         UserEntity newUser = userMapper.userDtoToUserEntity(userRegisterDTO);
-        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+        String encodePassword = passwordEncoder.encode(password);
+        newUser.setPassword(encodePassword);
 
         userRepository.save(newUser);
-        login(newUser);
+        login(newUser.getEmail());
         emailService.sendRegistrationEmail(newUser.getEmail(),
                 newUser.getFirstName() + " " + newUser.getLastName());
     }
 
-    private void login(UserEntity userEntity) {
+    private void login(String userName) {
         UserDetails userDetails =
-                userDetailsService.loadUserByUsername(userEntity.getEmail());
+                userDetailsService.loadUserByUsername(userName);
 
         Authentication auth =
                 new UsernamePasswordAuthenticationToken(

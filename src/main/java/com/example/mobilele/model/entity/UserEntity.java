@@ -1,8 +1,5 @@
 package com.example.mobilele.model.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,20 +8,24 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity{
+public class UserEntity extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String password;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
     private boolean isActive;
+
     private String imageUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -43,9 +44,8 @@ public class UserEntity extends BaseEntity{
         return password;
     }
 
-    public UserEntity setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 
     public String getFirstName() {
