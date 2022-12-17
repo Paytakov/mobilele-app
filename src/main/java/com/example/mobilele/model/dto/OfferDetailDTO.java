@@ -4,7 +4,7 @@ import com.example.mobilele.model.enums.EngineEnum;
 import com.example.mobilele.model.enums.TransmissionEnum;
 import java.math.BigDecimal;
 
-public class CardListingOfferDTO {
+public class OfferDetailDTO {
 
     private String imageUrl;
     private Integer year;
@@ -19,7 +19,7 @@ public class CardListingOfferDTO {
         return imageUrl;
     }
 
-    public CardListingOfferDTO setImageUrl(String imageUrl) {
+    public OfferDetailDTO setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
@@ -28,7 +28,7 @@ public class CardListingOfferDTO {
         return year;
     }
 
-    public CardListingOfferDTO setYear(Integer year) {
+    public OfferDetailDTO setYear(Integer year) {
         this.year = year;
         return this;
     }
@@ -37,7 +37,7 @@ public class CardListingOfferDTO {
         return brand;
     }
 
-    public CardListingOfferDTO setBrand(String brand) {
+    public OfferDetailDTO setBrand(String brand) {
         this.brand = brand;
         return this;
     }
@@ -46,7 +46,7 @@ public class CardListingOfferDTO {
         return model;
     }
 
-    public CardListingOfferDTO setModel(String model) {
+    public OfferDetailDTO setModel(String model) {
         this.model = model;
         return this;
     }
@@ -55,7 +55,7 @@ public class CardListingOfferDTO {
         return mileage;
     }
 
-    public CardListingOfferDTO setMileage(Integer mileage) {
+    public OfferDetailDTO setMileage(Integer mileage) {
         this.mileage = mileage;
         return this;
     }
@@ -64,7 +64,7 @@ public class CardListingOfferDTO {
         return price;
     }
 
-    public CardListingOfferDTO setPrice(BigDecimal price) {
+    public OfferDetailDTO setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
@@ -73,7 +73,7 @@ public class CardListingOfferDTO {
         return engine;
     }
 
-    public CardListingOfferDTO setEngine(EngineEnum engine) {
+    public OfferDetailDTO setEngine(EngineEnum engine) {
         this.engine = engine;
         return this;
     }
@@ -82,7 +82,7 @@ public class CardListingOfferDTO {
         return transmission;
     }
 
-    public CardListingOfferDTO setTransmission(TransmissionEnum transmission) {
+    public OfferDetailDTO setTransmission(TransmissionEnum transmission) {
         this.transmission = transmission;
         return this;
     }

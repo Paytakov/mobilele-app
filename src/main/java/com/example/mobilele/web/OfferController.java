@@ -4,6 +4,8 @@ import com.example.mobilele.model.dto.AddOfferDTO;
 import com.example.mobilele.model.dto.SearchOfferDTO;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.OfferService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +33,12 @@ public class OfferController {
     }
 
     @GetMapping("/offers/all")
-    public String allOffers() {
+    public String allOffers(Model model,
+                            @PageableDefault(
+                                    page = 0,
+                                    size = 5) Pageable pageable) {
+
+        model.addAttribute("offers", offerService.getAllOffers(pageable));
         return "offers";
     }
 
