@@ -3,9 +3,11 @@ package com.example.mobilele.model.dto;
 import com.example.mobilele.model.enums.EngineEnum;
 import com.example.mobilele.model.enums.TransmissionEnum;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class OfferDetailDTO {
 
+    private UUID id;
     private String imageUrl;
     private Integer year;
     private String brand;
@@ -14,6 +16,15 @@ public class OfferDetailDTO {
     private BigDecimal price;
     private EngineEnum engine;
     private TransmissionEnum transmission;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public OfferDetailDTO setId(UUID id) {
+        this.id = id;
+        return this;
+    }
 
     public String getImageUrl() {
         return imageUrl;

@@ -88,8 +88,7 @@ public class OfferController {
                     bindingResult);
             return "redirect:/offers/search";
         }
-        //TODO: Лъчо, моля покажи по-културен вариант от това, тъй като работи, но това изписване меко казано
-        // ми бърка някъде. В data.sql съм добавил оферта, за да се пробва search-a
+
         return String.format("redirect:/offers/search/%s", searchOfferDTO.getQuery());
     }
 
@@ -98,8 +97,6 @@ public class OfferController {
         model.addAttribute("offers", this.offerService.findOfferByOfferName(query));
         return "offer-search";
     }
-
-    //TODO: Имаш бонус работещо DTO - CardListingDTO със настроен mapper за offer catalogue
 
     @ModelAttribute(name = "searchOfferModel")
     private SearchOfferDTO initSearchModel() {
