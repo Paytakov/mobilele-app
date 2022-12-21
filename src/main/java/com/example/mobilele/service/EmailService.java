@@ -25,7 +25,9 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendRegistrationEmail(String userEmail, String userName) {
+    public void sendRegistrationEmail(String userEmail,
+                                      String userName,
+                                      Locale preferredLocale) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         try {
@@ -33,7 +35,7 @@ public class EmailService {
             mimeMessageHelper.setFrom("hr@mobilele.com");
             mimeMessageHelper.setTo(userEmail);
             mimeMessageHelper.setSubject("Welcome!");
-            mimeMessageHelper.setText(generateMessageContent(userName), true);
+            mimeMessageHelper.setText(generateMessageContent(preferredLocale, userName), true);
 
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {
@@ -41,15 +43,9 @@ public class EmailService {
         }
     }
 
-    private String getEmailSubject(Locale locale) {
-        return messageSource.getMessage(
-                "registration_subject",
-                new Object[0],
-                locale);
-    }
-
-    private String generateMessageContent(String userName) {
+    private String generateMessageContent(Locale locale, String userName) {
         Context ctx = new Context();
+        ctx.setLocale(locale);
         ctx.setVariable("userName", userName);
         return templateEngine.process("email/registration", ctx);
     }
