@@ -34,13 +34,20 @@ public class EmailService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             mimeMessageHelper.setFrom("hr@mobilele.com");
             mimeMessageHelper.setTo(userEmail);
-            mimeMessageHelper.setSubject("Welcome!");
+            mimeMessageHelper.setSubject(getEmailSubject(preferredLocale));
             mimeMessageHelper.setText(generateMessageContent(preferredLocale, userName), true);
 
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getEmailSubject(Locale locale) {
+        return messageSource.getMessage(
+                "registration_subject",
+                new Object[0],
+                locale);
     }
 
     private String generateMessageContent(Locale locale, String userName) {
