@@ -44,8 +44,9 @@ public class UserEntity extends BaseEntity {
         return password;
     }
 
-    public void setPassword(String password) {
+    public UserEntity setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getFirstName() {
