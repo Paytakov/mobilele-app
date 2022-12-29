@@ -9,6 +9,6 @@
 
 mail:
   host: "localhost"
-  port: 1025
+  port: 8181
   username: "hr@mobilele.com"
-  password: ""
+  password: "topsecret"
