@@ -16,6 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 
 @Service
 public class OfferService {
@@ -63,4 +66,10 @@ public class OfferService {
                 .map(offerEntity -> offerMapper.offerEntityToOfferDetailDto(offerEntity))
                 .toList();
     }
+
+    public Optional<OfferDetailDTO> getOfferByUUID(UUID offerID) {
+        return offerRepository.findById(offerID)
+                .map(offerMapper::offerEntityToOfferDetailDto);
+    }
+
 }

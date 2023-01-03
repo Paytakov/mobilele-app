@@ -1,6 +1,8 @@
 package com.example.mobilele.web;
 
+import com.example.mobilele.exception.ObjectNotFoundException;
 import com.example.mobilele.model.dto.AddOfferDTO;
+import com.example.mobilele.model.dto.OfferDetailDTO;
 import com.example.mobilele.model.dto.SearchOfferDTO;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.OfferService;
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -106,8 +110,20 @@ public class OfferController {
         return new SearchOfferDTO();
     }
 
-    @GetMapping("/offers/{id}/details")
-    public String getOfferDetail(@PathVariable("id") UUID id) {
+    @GetMapping("/offers/{id}")
+    public String getOfferDetail(
+            @PathVariable("id") UUID id,
+            Model model) {
+
+        var offerDto =
+                offerService.getOfferByUUID(id)
+                        .orElseThrow(() ->
+                                new ObjectNotFoundException(
+                                        "Offer with id " + id + " not found!"
+                                ));
+
+        model.addAttribute("offer", offerDto);
+
         return "details";
     }
 }
