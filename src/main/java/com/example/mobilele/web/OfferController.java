@@ -126,11 +126,10 @@ public class OfferController {
         return "details";
     }
 
-    @PreAuthorize("@offerService.isOwner(#principal.name, #id)")
+    // @PreAuthorize("isOwner(#principal.name, #id)")
+    @PreAuthorize("isOwner(#id)")
     @DeleteMapping("/offers/{id}")
-    public String deleteOffer(
-            Principal principal,
-            @PathVariable("id") UUID id) {
+    public String deleteOffer(@PathVariable("id") UUID id) {
         offerService.deleteOfferById(id);
 
         return "redirect:/offers/all";
