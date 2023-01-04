@@ -6,6 +6,7 @@ import com.example.mobilele.model.dto.SearchOfferDTO;
 import com.example.mobilele.model.entity.ModelEntity;
 import com.example.mobilele.model.entity.OfferEntity;
 import com.example.mobilele.model.entity.UserEntity;
+import com.example.mobilele.model.enums.UserRoleEnum;
 import com.example.mobilele.model.mapper.OfferMapper;
 import com.example.mobilele.repository.ModelRepository;
 import com.example.mobilele.repository.OfferRepository;
@@ -72,4 +73,29 @@ public class OfferService {
                 .map(offerMapper::offerEntityToOfferDetailDto);
     }
 
+    public boolean isOwner(String userName, UUID offerID) {
+        boolean isOwner = offerRepository
+                .findById(offerID)
+                .filter(o -> o.getSeller().getEmail().equals(userName))
+                .isPresent();
+
+        if (isOwner) {
+            return true;
+        }
+
+        return userRepository
+                .findByEmail(userName)
+                .filter(this::isAdmin)
+                .isPresent();
+    }
+
+    public void deleteOfferById(UUID offerID) {
+        offerRepository.deleteById(offerID);
+    }
+
+    private boolean isAdmin(UserEntity user) {
+        return user.getUserRoles()
+                .stream()
+                .anyMatch(r -> r.getUserRole() == UserRoleEnum.ADMIN);
+    }
 }

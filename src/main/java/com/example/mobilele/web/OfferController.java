@@ -2,13 +2,13 @@ package com.example.mobilele.web;
 
 import com.example.mobilele.exception.ObjectNotFoundException;
 import com.example.mobilele.model.dto.AddOfferDTO;
-import com.example.mobilele.model.dto.OfferDetailDTO;
 import com.example.mobilele.model.dto.SearchOfferDTO;
 import com.example.mobilele.service.BrandService;
 import com.example.mobilele.service.OfferService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.validation.Valid;
-import java.util.Optional;
+import java.security.Principal;
 import java.util.UUID;
 
 @Controller
@@ -125,5 +124,15 @@ public class OfferController {
         model.addAttribute("offer", offerDto);
 
         return "details";
+    }
+
+    @PreAuthorize("@offerService.isOwner(#principal.name, #id)")
+    @DeleteMapping("/offers/{id}")
+    public String deleteOffer(
+            Principal principal,
+            @PathVariable("id") UUID id) {
+        offerService.deleteOfferById(id);
+
+        return "redirect:/offers/all";
     }
 }
