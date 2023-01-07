@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.UUID;
@@ -80,12 +81,11 @@ public class OfferController {
     @GetMapping("/offers/search")
     public String searchQuery(@Valid SearchOfferDTO searchOfferDTO,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes,
                               Model model) {
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("searchOfferModel", searchOfferDTO);
-            redirectAttributes.addFlashAttribute(
+            model.addAttribute("searchOfferModel", searchOfferDTO);
+            model.addAttribute(
                     "org.springframework.validation.BindingResult.searchOfferModel",
                     bindingResult);
 
