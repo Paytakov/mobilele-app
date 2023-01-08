@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -56,7 +57,7 @@ public class UserService {
                 preferredLocale);
     }
 
-    private void login(String userName) {
+    public void login(String userName) {
         UserDetails userDetails =
                 userDetailsService.loadUserByUsername(userName);
 
@@ -72,4 +73,17 @@ public class UserService {
                 setAuthentication(auth);
     }
 
+    public void createUserIfNotExist(String email) {
+        var userOpt = this.userRepository.findByEmail(email);
+
+        if (userOpt.isEmpty()) {
+            var newUser = new UserEntity().
+                    setEmail(email).
+                    setPassword(null).
+                    setFirstName("New").
+                    setLastName("User").
+                    setUserRoles(List.of());
+            userRepository.save(newUser);
+        }
+    }
 }

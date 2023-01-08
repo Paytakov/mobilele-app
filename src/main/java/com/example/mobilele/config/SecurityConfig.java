@@ -2,6 +2,7 @@ package com.example.mobilele.config;
 
 import com.example.mobilele.repository.UserRepository;
 import com.example.mobilele.service.MobileleUserDetailsService;
+import com.example.mobilele.service.OAuthSuccessHandler;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http,
+                                           OAuthSuccessHandler oAuthSuccessHandler) throws Exception {
 
         http.
                 // define which requests are allowed and which not
@@ -58,7 +60,11 @@ public class SecurityConfig {
                         logoutSuccessUrl("/").
                 // invalidate the session and delete the cookies
                         invalidateHttpSession(true).
-                deleteCookies("JSESSIONID");
+                    deleteCookies("JSESSIONID").
+                and().
+                    oauth2Login().
+                    loginPage("/users/login").
+                    successHandler(oAuthSuccessHandler);
 
 
         return http.build();
